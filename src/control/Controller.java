@@ -11,7 +11,15 @@ import util.JsonLoader;
 import javax.swing.*;
 
 public class Controller {
-    private static Controller controller;
+
+    private  static Controller controller=new Controller();
+
+    public static Controller getInstance(){
+        return controller;
+    }
+
+
+
     private Board board;
     private BoardManager boardManager;
     private Solver solver=new Solver();
@@ -21,19 +29,14 @@ public class Controller {
     private boolean gameFinished=false;
 
 
-    public static Controller getInstance() {
-        if (controller == null) {
-            controller = new Controller();
-            return controller;
-        }
-        return controller;
-    }
+
 
     private Controller() {
         board = new Board();
         boardManager = new BoardManager(board);
-       myPanel=MyPanel.getInstance();
-        myFrame= MyFrame.getInstance(myPanel);
+       myPanel=new MyPanel();
+       myPanel.setController(this);
+        myFrame= new MyFrame(myPanel);
 
         if(!(solver.solvable(board.getMissingPiece(), JsonLoader.getInstance().getJsonConfig().getPicsRandomOrder()))){
             JOptionPane.showMessageDialog(myFrame,"this puzzle can not be solved, please try again ","not solvable",JOptionPane.WARNING_MESSAGE);
@@ -79,14 +82,6 @@ public class Controller {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public static Controller getController() {
-        return controller;
-    }
-
-    public static void setController(Controller controller) {
-        Controller.controller = controller;
     }
 
     public BoardManager getBoardManager() {

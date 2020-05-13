@@ -4,6 +4,17 @@ package control;
 import intefaces.Execution;
 
 public class Mapper {
+
+    private Controller controller;
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     // be khater static bodan majbor shodam missingPiece ro bara hameh tarif konam
     //singelton mapper
     private static Mapper instance = new Mapper();
